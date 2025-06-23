@@ -1,40 +1,42 @@
-import React, { useState, Suspense } from 'react';
+// components/GLBViewer.tsx
+import React, { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 
-type GLBModelProps = {
-  glbUrl: string;
+const Model = ({ url }: { url: string }) => {
+  const gltf = useGLTF(url);
+  return <primitive object={gltf.scene} />;
 };
 
-function GLBModel({ glbUrl }: GLBModelProps) {
-  const { scene } = useGLTF(glbUrl);
-  return <primitive object={scene} />;
-}
+const GLBViewer = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [modelUrl, setModelUrl] = React.useState<string | null>(null);
 
-export default function wer() {
-  const [glbUrl, setGlbUrl] = useState<string | null>(null);
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && file.name.endsWith('.glb')) {
-      const url = URL.createObjectURL(file);
-      setGlbUrl(url);
-    } else {
-      alert('Please upload a .glb file');
+    if (file) {
+      const blobUrl = URL.createObjectURL(file);
+      setModelUrl(blobUrl);
     }
   };
 
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
-      <input type="file" accept=".glb" onChange={handleFileUpload} />
-      <Canvas camera={{ position: [0, 1, 5], fov: 50 }}>
-        <ambientLight />
-        <directionalLight position={[2, 2, 2]} />
+    <div style={{ height: '100vh', background: '#111' }}>
+      <input
+        type="file"
+        accept=".glb"
+        ref={inputRef}
+        onChange={handleFileChange}
+        style={{ position: 'absolute', zIndex: 1, margin: 10 }}
+      />
+      <Canvas camera={{ position: [0, 1, 3] }}>
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} />
         <OrbitControls />
-        <Suspense fallback={null}>
-          {glbUrl && <GLBModel glbUrl={glbUrl} />}
-        </Suspense>
+        {modelUrl && <Model url={modelUrl} />}
       </Canvas>
     </div>
   );
-}
+};
+
+export default GLBViewer;

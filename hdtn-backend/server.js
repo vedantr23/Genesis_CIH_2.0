@@ -1,78 +1,161 @@
-
-const express = require('express');
-const cors = require('cors');
+const express = require("express");
+const cors = require("cors");
+const admin = require("firebase-admin");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-
 app.use(cors());
 app.use(express.json());
 
-// In-memory data stores
+// Initialize Firebase Admin
+const serviceAccount = require("./hdtn-ae8e8-firebase-adminsdk-fbsvc-038349ead5.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const db = admin.firestore();
+const tasksCollection = db.collection("tasks");
+
+// Static task data
 const tasks = [
-  { id: '1', title: 'Community Garden Helper', lat: 51.505, lng: -0.09, description: 'Help plant new flowers in the community garden. Looking for volunteers for a weekend event.' },
-  { id: '2', title: 'Tech Meetup Volunteer', lat: 51.515, lng: -0.10, description: 'Assist with registration and setup for a local tech meetup. Evening availability preferred.' },
-  { id: '3', title: 'Library Book Organizer', lat: 51.500, lng: -0.12, description: 'Organize and shelve books at the public library. Flexible hours during weekdays.' },
-  { id: '4', title: 'Local Park Cleanup Crew', lat: 51.520, lng: -0.08, description: 'Join us for a park cleanup initiative this Saturday morning. Equipment provided.' },
-  { id: '5', title: 'Frontend Feedback Session', lat: 51.495, lng: -0.11, description: 'Provide feedback on a new web application prototype. 1-hour remote session.' }
+  {
+    id: 'mp001',
+    title: 'Collaborate on Web App',
+    type: 'mentorship',
+    categoryLabel: 'MENTORSHIP',
+    description: 'Early-stage startup idea in sustainable tech needs a co-founder with marketing/business development skills. Looking for a mentor to guide product strategy.',
+    tags: ['AI Ethics', 'DevOps', 'Project Management', 'Sustainable Tech'],
+    offeredBy: 'Jamie Curious', // Name for display
+    offeredById: 'user004', // UserProfile ID
+    icon: '🧑‍🏫',
+  },
+  {
+    id: 'mp002',
+    title: 'Need UX Feedback',
+    type: 'gig',
+    categoryLabel: 'GIG',
+    description: 'Need a fresh pair of eyes to proofread and provide suggestions on a technical blog post about AI. Quick turnaround preferred.',
+    tags: ['React', 'UX Design', 'Minimalism', 'Node.js', 'Technical Writing'],
+    offeredBy: 'Skyler Resourceful',
+    offeredById: 'user005',
+    icon: '💼',
+  },
+  {
+    id: 'mp003',
+    title: 'Mental Wellness Buddy',
+    type: 'support',
+    categoryLabel: 'SUPPORT',
+    description: 'Looking for a frontend developer to collaborate on a new social good project. Stack: React, Tailwind. Focus on mental wellness support.',
+    tags: ['Illustration', 'AI Ethics', 'Data Analysis', 'React', 'Tailwind'],
+    offeredBy: 'Casey Creative',
+    offeredById: 'user006',
+    icon: '🤝',
+  },
+  {
+    id: 'mp004',
+    title: 'Full-Stack Developer Role',
+    type: 'job',
+    categoryLabel: 'JOB',
+    description: 'Early-stage startup idea in sustainable tech needs a co-founder with marketing/business development expertise. Full-time role with equity options.',
+    tags: ['Sustainable Tech', 'Cloud Computing', 'Full-Stack', 'Node.js', 'React'],
+    offeredBy: 'Taylor Pragmatic',
+    offeredById: 'user007',
+    icon: '💻',
+  },
+  {
+    id: 'mp005',
+    title: 'Barter Skills: Coding for Art',
+    type: 'barter',
+    categoryLabel: 'BARTER',
+    description: 'Seeking honest feedback on a new mobile app prototype for user experience and usability. Will offer graphic design services in return.',
+    tags: ['Mobile App', 'UX Feedback', 'Graphic Design', 'Prototyping'],
+    offeredBy: 'Bella Ciao',
+    offeredById: 'user002',
+    icon: '🎨',
+  },
+  {
+    id: 'mp006',
+    title: 'Graphic Design for Blog',
+    type: 'freelance',
+    categoryLabel: 'FREELANCE',
+    description: 'I\'m a backend developer (Node.js, Postgres) looking to trade coding services for digital art or illustrations for my tech blog. Short-term project.',
+    tags: ['Graphic Design', 'Blog Graphics', 'Illustration', 'Freelance'],
+    offeredBy: 'Alex Ryder', // Current user can also post
+    offeredById: 'user123',
+    icon: '✍️',
+  },
+   {
+    id: 'mp007',
+    title: 'Learn Python for Data Science',
+    type: 'learning',
+    categoryLabel: 'LEARNING',
+    description: 'Join our study group for learning Python specifically for data science applications. Weekly sessions, beginner-friendly.',
+    tags: ['Python', 'Data Science', 'Machine Learning', 'Study Group'],
+    offeredBy: 'Data Enthusiasts Club', // Could be an org, or a user representing it
+    offeredById: 'user003', // Carlos Duty is organizing
+    icon: '📚',
+  },
+  {
+    id: 'mp008',
+    title: 'Volunteer for Local Shelter',
+    type: 'volunteer',
+    categoryLabel: 'VOLUNTEER',
+    description: 'Animal shelter needs volunteers for weekend shifts. Duties include animal care, cleaning, and assisting visitors.',
+    tags: ['Animal Welfare', 'Community', 'Volunteering'],
+    offeredBy: 'Paws & Claws Shelter',
+    offeredById: 'user004', // Jamie is coordinating volunteers
+    icon: '💖',
+  },
+  {
+    id: 'mp009',
+    title: 'Open Source Project Contributor',
+    type: 'collaboration',
+    categoryLabel: 'COLLABORATION',
+    description: 'Looking for developers to contribute to an open-source project focused on accessibility tools for the web. All skill levels welcome.',
+    tags: ['Open Source', 'Accessibility', 'JavaScript', 'Collaboration'],
+    offeredBy: 'A11y Collective',
+    offeredById: 'user005', // Skyler represents the collective
+    icon: '🧑‍💻',
+  }
 ];
 
-let applications = []; // Stores { userId, taskId, appliedAt }
+// // Route to add all tasks to Firebase
+app.get("/upload-tasks", async (req, res) => {
+  try {
+    const batch = db.batch();
 
-// --- Routes ---
+    tasks.forEach((task) => {
+      const docRef = tasksCollection.doc(task.id); // use ID as doc ID
+      batch.set(docRef, task);
+    });
 
-// GET /tasks - returns static array of tasks
-app.get('/tasks', (req, res) => {
-  res.json(tasks);
+    await batch.commit();
+    res.json({ message: "Tasks uploaded to Firebase successfully." });
+  } catch (error) {
+    console.error("Error uploading tasks:", error);
+    res.status(500).json({ error: "Failed to upload tasks." });
+  }
 });
 
-// POST /apply - accepts { userId, taskId }, stores in memory, and returns success
-app.post('/apply', (req, res) => {
-  const { userId, taskId } = req.body;
-
-  if (!userId || !taskId) {
-    return res.status(400).json({ success: false, message: 'User ID and Task ID are required.' });
+// Route to retrieve all tasks from Firebase
+app.get("/get-tasks", async (req, res) => {
+  try {
+    const snapshot = await tasksCollection.get();
+    const allTasks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    res.json(allTasks);
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    res.status(500).json({ error: "Failed to fetch tasks." });
   }
-
-  const taskExists = tasks.some(task => task.id === taskId);
-  if (!taskExists) {
-    return res.status(404).json({ success: false, message: 'Task not found.' });
-  }
-
-  const alreadyApplied = applications.some(app => app.userId === userId && app.taskId === taskId);
-  if (alreadyApplied) {
-    return res.status(409).json({ success: false, message: 'You have already applied for this task.' });
-  }
-
-  const newApplication = {
-    userId,
-    taskId,
-    appliedAt: new Date().toISOString()
-  };
-  applications.push(newApplication);
-
-  console.log(`User ${userId} applied for task ${taskId}`);
-  res.status(201).json({ success: true, message: 'Successfully applied for the task.' });
 });
 
-// GET /applications/:userId - returns all tasks applied by this user
-app.get('/applications/:userId', (req, res) => {
-  const { userId } = req.params;
-
-  if (!userId) {
-    return res.status(400).json({ message: 'User ID is required.' });
-  }
-
-  const userApplications = applications.filter(app => app.userId === userId);
-  
-  const populatedApplications = userApplications.map(app => {
-    const taskDetails = tasks.find(task => task.id === app.taskId);
-    return taskDetails ? { ...taskDetails, appliedAt: app.appliedAt } : null;
-  }).filter(Boolean); // Filter out nulls if a task was somehow deleted or ID mismatch
-
-  res.json(populatedApplications);
+// Root check
+app.get("/", (req, res) => {
+  console.log("api unding");
+  res.send("Root route hit");
 });
 
-app.listen(PORT, () => {
-  console.log(\`HDTN Backend server running on http://localhost:\${PORT}\`);
+// Start server
+app.listen(3000, () => {
+  console.log("server is running on port", 3000);
 });

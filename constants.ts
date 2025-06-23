@@ -38,8 +38,8 @@ export const MOCK_USER: UserProfile = {
 };
 
 export const OTHER_USERS_ON_MAP: UserProfile[] = [ // These are also potential chat partners
-  { id: 'user002', name: 'Bella Ciao', bio: 'Designer & Dreamer. Loves to collaborate on innovative UI/UX projects. Coffee enthusiast.', skills: ['UI/UX', 'Figma', 'Illustration', 'Prototyping'], avatarUrl: 'https://picsum.photos/seed/bella/100/100', location: [34.0600, -118.2500], education: [{ id: 'edu_bella1', institution: 'Design Institute', degree: 'MFA in Design', fieldOfStudy: 'Digital Media', startYear: '2019', endYear: '2021' }] },
-  { id: 'user003', name: 'Carlos Duty', bio: 'Logistics expert and community organizer. Always ready to help coordinate efforts for local events.', skills: ['Logistics', 'Event Planning', 'Team Coordination', 'Communication'], avatarUrl: 'https://picsum.photos/seed/carlos/100/100', location: [34.0450, -118.2300], education: [{ id: 'edu_carlos1', institution: 'Metro College', degree: 'BBA', fieldOfStudy: 'Supply Chain Management', startYear: '2015', endYear: '2019' }] },
+  { id: 'user002', name: 'Bella Ciao', bio: 'Designer & Dreamer. Loves to collaborate on innovative UI/UX projects. Coffee enthusiast.', skills: ['UI/UX', 'Figma', 'Illustration', 'Prototyping'], avatarUrl: 'https://picsum.photos/seed/bella/100/100', location: [34.0600, -118.2500], education: [{id: 'edu_bella1', institution: 'Design Institute', degree: 'MFA in Design', fieldOfStudy: 'Digital Media', startYear: '2019', endYear: '2021'}] },
+  { id: 'user003', name: 'Carlos Duty', bio: 'Logistics expert and community organizer. Always ready to help coordinate efforts for local events.', skills: ['Logistics', 'Event Planning', 'Team Coordination', 'Communication'], avatarUrl: 'https://picsum.photos/seed/carlos/100/100', location: [34.0450, -118.2300], education: [{id: 'edu_carlos1', institution: 'Metro College', degree: 'BBA', fieldOfStudy: 'Supply Chain Management', startYear: '2015', endYear: '2019'}] },
   { id: 'user004', name: 'Jamie Curious', bio: 'Tech enthusiast focusing on sustainable solutions and AI ethics. Always learning.', skills: ['Python', 'AI Ethics', 'Research', 'DevOps Basics'], avatarUrl: 'https://picsum.photos/seed/jamie/100/100', location: [34.0750, -118.2350] },
   { id: 'user005', name: 'Skyler Resourceful', bio: 'Content creator and technical writer. Specializes in making complex topics accessible.', skills: ['Technical Writing', 'Content Strategy', 'SEO', 'UX Writing'], avatarUrl: 'https://picsum.photos/seed/skyler/100/100', location: [34.0320, -118.2150] },
   { id: 'user006', name: 'Casey Creative', bio: 'Frontend dev with a passion for social good projects and beautiful interfaces.', skills: ['React', 'TailwindCSS', 'JavaScript', 'Firebase'], avatarUrl: 'https://picsum.photos/seed/casey/100/100', location: [34.0800, -118.2000] },
@@ -82,7 +82,7 @@ export const OPPORTUNITY_FILTER_CATEGORIES: { label: string; type: OpportunityTy
   { label: 'Learning', type: 'learning' },
   { label: 'Support', type: 'support' },
   { label: 'Barter', type: 'barter' },
-  { label: 'Collaboration', type: 'collaboration' },
+  { label: 'Collaboration', type: 'collaboration'},
 ];
 
 export const MARKETPLACE_OPPORTUNITIES: OpportunityItem[] = [
@@ -152,7 +152,7 @@ export const MARKETPLACE_OPPORTUNITIES: OpportunityItem[] = [
     offeredById: 'user123',
     icon: '✍️',
   },
-  {
+   {
     id: 'mp007',
     title: 'Learn Python for Data Science',
     type: 'learning',

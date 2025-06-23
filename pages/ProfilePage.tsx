@@ -2,6 +2,7 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import AvatarDisplay from "../components/AvatarDisplay";
 import { useUser } from "../contexts/UserContext";
 import { UserProfile, EducationEntry } from "../types";
+import GLBViewer from "./3dmodel";
 
 const defaultAvatar =
   "https://api.dicebear.com/7.x/initials/svg?seed=Guest&backgroundColor=00897b,00acc1,26a69a,26c6da,4db6ac,80cbc4,a7ffeb,c0fff3&backgroundType=gradientLinear&radius=50&fontFamily=Arial";
@@ -249,6 +250,7 @@ const ProfilePage: React.FC = () => {
           onSubmit={handleSubmit}
           className="bg-slate-800 shadow-2xl rounded-xl p-6 md:p-10"
         >
+          
           <h2 className="text-3xl font-bold text-teal-400 mb-8 text-center">
             {currentUser ? "Edit Profile" : "Create Your Profile"}
           </h2>
@@ -672,6 +674,12 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* <GLBViewer/> */}
+
+
+
+
     </div>
   );
 };

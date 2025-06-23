@@ -7,7 +7,7 @@ import MapPage from './pages/MapPage';
 import ChatPage from './pages/ChatPage';
 import MarketplacePage from './pages/MarketplacePage'; 
 import { UserProvider } from './contexts/UserContext';
-import GLBViewer from './pages/3dmodel';
+
 
 const ProfileIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -47,7 +47,6 @@ const Sidebar: React.FC = () => {
     { name: 'Marketplace', path: '/marketplace', icon: <MarketplaceIcon /> }, // Added Marketplace
     { name: 'Map', path: '/map', icon: <MapIcon /> },
     { name: 'Chat', path: '/chat', icon: <ChatIcon /> },
-   
   ];
 
   return (
@@ -97,7 +96,6 @@ const App: React.FC = () => {
               <Route path="/marketplace" element={<MarketplacePage />} /> {/* Added Marketplace Route */}
               <Route path="/map" element={<MapPage />} />
               <Route path="/chat" element={<ChatPage />} />
-              
             </Routes>
           </main>
           <Footer />
