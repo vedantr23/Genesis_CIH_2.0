@@ -37,7 +37,7 @@ const createTaskIcon = (taskType: Task['type']) => {
   const colorMap: { [key: string]: string } = {
     'bg-blue-500': '#3b82f6',
     'bg-green-500': '#22c55e',
-    'bg-red-600': '#dc2626',
+    'bg-red-600': '#dc2626',  
     'bg-slate-500': '#64748b'
   };
   const actualBgColor = colorMap[bgColor] || '#64748b';

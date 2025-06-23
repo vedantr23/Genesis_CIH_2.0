@@ -4,11 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js next dev vite dev react-scripts start",
+    "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "@google/genai": "^1.5.1",
     "@react-three/drei": "^10.3.0",
     "@react-three/fiber": "^9.1.2",

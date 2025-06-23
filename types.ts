@@ -1,4 +1,3 @@
-
 export interface EducationEntry {
   id: string; // For React keys and simple management
   institution: string;
@@ -18,29 +17,30 @@ export interface UserProfile {
   education?: EducationEntry[];
 }
 
-export interface Task { // Primarily for Map Page tasks
+export interface Task {
+  // Primarily for Map Page tasks
   id: string;
   title: string;
   description: string;
   location: [number, number]; // [latitude, longitude]
-  status: 'open' | 'in-progress' | 'completed';
-  type: 'gig' | 'help-request' | 'medical-camp';
+  status: "open" | "in-progress" | "completed";
+  type: "gig" | "help-request" | "medical-camp";
   postedBy: string; // User ID or organization name
   xpPoints?: number;
 }
 
 // For Marketplace
 export type OpportunityType =
-  | 'all' // For filter
-  | 'job'
-  | 'gig'
-  | 'volunteer'
-  | 'freelance'
-  | 'mentorship'
-  | 'learning'
-  | 'support'
-  | 'barter'
-  | 'collaboration';
+  | "all" // For filter
+  | "job"
+  | "gig"
+  | "volunteer"
+  | "freelance"
+  | "mentorship"
+  | "learning"
+  | "support"
+  | "barter"
+  | "collaboration";
 
 export interface OpportunityItem {
   id: string;
@@ -53,7 +53,6 @@ export interface OpportunityItem {
   offeredById: string; // ID of the UserProfile who offered this
   icon?: string;
 }
-
 
 export interface ChatMessage {
   id: string;
@@ -68,13 +67,13 @@ export interface ChatMessage {
 }
 
 export enum Language {
-  ENGLISH = 'English',
-  SPANISH = 'Spanish',
-  FRENCH = 'French',
-  GERMAN = 'German',
-  JAPANESE = 'Japanese',
-  KOREAN = 'Korean',
-  CHINESE_SIMPLIFIED = 'Chinese (Simplified)',
+  ENGLISH = "English",
+  SPANISH = "Spanish",
+  FRENCH = "French",
+  GERMAN = "German",
+  JAPANESE = "Japanese",
+  KOREAN = "Korean",
+  CHINESE_SIMPLIFIED = "Chinese (Simplified)",
 }
 
 export interface GroundingChunkWeb {

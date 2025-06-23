@@ -1,13 +1,13 @@
-
-import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import HomePage from './pages/HomePage';
-import ProfilePage from './pages/ProfilePage';
-import MarketplacePage from './pages/MarketplacePage';
-import DashboardPage from './pages/DashboardPage';
-import { ToastMessage } from './types';
-import Toast from './components/Toast';
+import React, { useState, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
+import ProfilePage from "./pages/ProfilePage";
+import MarketplacePage from "./pages/MarketplacePage";
+import DashboardPage from "./pages/DashboardPage";
+import LiveLoation_Tracker from "./pages/LiveLoation Tracker";
+import { ToastMessage } from "./types";
+import Toast from "./components/Toast";
 
 const App: React.FC = () => {
   const [toast, setToast] = useState<ToastMessage | null>(null);
@@ -17,7 +17,10 @@ const App: React.FC = () => {
     setToast(null); // Clear toast on route change
   }, [location]);
 
-  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+  const showToast = (
+    message: string,
+    type: "success" | "error" = "success"
+  ) => {
     setToast({ message, type, id: Date.now() });
   };
 
@@ -28,11 +31,21 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/marketplace" element={<MarketplacePage showToast={showToast} />} />
+          <Route
+            path="/marketplace"
+            element={<MarketplacePage showToast={showToast} />}
+          />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/tracker" element={<DashboardPage />} />
         </Routes>
       </main>
-      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 };

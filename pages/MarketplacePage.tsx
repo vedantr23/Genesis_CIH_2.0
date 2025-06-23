@@ -1,9 +1,9 @@
-
 import React, { useState } from 'react';
 import { MARKETPLACE_OPPORTUNITIES, OPPORTUNITY_FILTER_CATEGORIES } from '../constants';
 import { OpportunityItem, OpportunityType } from '../types';
 import OpportunityCard from '../components/OpportunityCard';
 import OpportunityDetailsModal from '../components/OpportunityDetailsModal'; // New Modal
+import { Link } from 'react-router-dom';
 
 const MarketplacePage: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<OpportunityType>('all');
@@ -22,10 +22,17 @@ const MarketplacePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn text-slate-100 h-full flex flex-col">
-      <div className="px-1">
-        <h1 className="text-4xl font-bold text-sky-400">Opportunities Marketplace</h1>
-        <p className="text-slate-400 mt-1 text-lg">Find micro-tasks, gigs, learning, collaborations, and support.</p>
+    <div className="space-y-8 animate-fadeIn text-slate-100 h-full flex flex-col relative">
+      <div className="flex justify-between items-start px-1">
+        <div>
+          <h1 className="text-4xl font-bold text-sky-400">Opportunities Marketplace</h1>
+          <p className="text-slate-400 mt-1 text-lg">Find micro-tasks, gigs, learning, collaborations, and support.</p>
+        </div>
+        <button
+          className="bg-gradient-to-r from-sky-500 to-teal-400 hover:from-sky-600 hover:to-teal-500 text-white font-semibold px-6 py-2 rounded-lg shadow-lg transition-all duration-200 mt-2"
+        >
+          Find Work Globally
+        </button>
       </div>
 
       <div className="py-3 px-1">
@@ -44,6 +51,11 @@ const MarketplacePage: React.FC = () => {
               {category.label}
             </button>
           ))}
+
+          <Link to={"http://127.0.0.1:5000/"}>
+           <button  className='px-4 py-2 text-sm font-medium rounded-md transition-all duration-200 ease-in-out bg-sky-500 text-white  '> Find JOB</button>
+          </Link>
+
         </div>
       </div>
 
