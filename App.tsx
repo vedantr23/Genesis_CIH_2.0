@@ -6,6 +6,7 @@ import MapPage from "./pages/MapPage";
 import ChatPage from "./pages/ChatPage";
 import MarketplacePage from "./pages/MarketplacePage";
 import { UserProvider } from "./contexts/UserContext";
+import Model from "./pages/3dmodel";
 
 const ProfileIcon = () => (
   <svg
@@ -116,6 +117,7 @@ const Sidebar: React.FC = () => {
     { name: "Marketplace", path: "/marketplace", icon: <MarketplaceIcon /> }, // Added Marketplace
     { name: "Job Map", path: "/map", icon: <MapIcon /> },
     { name: "Chat", path: "/chat", icon: <ChatIcon /> },
+    
     // { name: "Livelocation_tracker", path: "/tracker", icon: <Tracker /> },
   ];
 
@@ -178,6 +180,8 @@ const App: React.FC = () => {
               {/* Added Marketplace Route */}
               <Route path="/map" element={<MapPage />} />
               <Route path="/chat" element={<ChatPage />} />
+              <Route path="/model" element={<Model />} />
+
               {/* <Route path="/tracker" element={<LiveLoation_Tracker />} /> */}
             </Routes>
           </main>

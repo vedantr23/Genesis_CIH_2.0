@@ -2,7 +2,8 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import AvatarDisplay from "../components/AvatarDisplay";
 import { useUser } from "../contexts/UserContext";
 import { UserProfile, EducationEntry } from "../types";
-import GLBViewer from "./3dmodel";
+import { Link } from "react-router-dom";
+
 
 const defaultAvatar =
   "https://api.dicebear.com/7.x/initials/svg?seed=Guest&backgroundColor=00897b,00acc1,26a69a,26c6da,4db6ac,80cbc4,a7ffeb,c0fff3&backgroundType=gradientLinear&radius=50&fontFamily=Arial";
@@ -622,60 +623,32 @@ const ProfilePage: React.FC = () => {
         </p>
 
         <div className="mt-4 p-6 bg-slate-700/50 rounded-lg border border-slate-600">
-          <div className="flex flex-col items-center justify-center">
+          {/* <div className="flex flex-col items-center justify-center">
             <div className="w-full max-w-md h-64 bg-slate-800 rounded-lg mb-6 flex items-center justify-center border-2 border-dashed border-slate-600">
-              <iframe
-                id="glb-viewer"
-                src="https://glb.ee/viewer.html"
-                className="w-full h-full border-0 rounded-lg"
-                title="3D Model Viewer"
-                allow="fullscreen"
-              ></iframe>
+                <iframe
+                  id="glb-viewer"
+                  src="https://glb.ee/viewer.html"
+                  className="w-full h-full border-0 rounded-lg"
+                  title="3D Model Viewer"
+                  allow="fullscreen"
+                ></iframe>
             </div>
 
-            <div className="w-full max-w-md">
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Upload GLB File
-              </label>
-              <div className="flex items-center space-x-2">
-                <label className="flex-1 cursor-pointer bg-teal-600 hover:bg-teal-500 text-white font-medium py-2.5 px-4 rounded-md transition-colors duration-200 text-center">
-                  Choose File
-                  <input
-                    type="file"
-                    id="glb-upload"
-                    accept=".glb"
-                    className="hidden"
-                    onChange={handleGlbUpload}
-                  />
-                </label>
-                <button
-                  onClick={handleFullscreen}
-                  className="bg-sky-600 hover:bg-sky-500 text-white font-medium py-2.5 px-4 rounded-md transition-colors duration-200"
-                  title="Enter fullscreen"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M3 4a1 1 0 011-1h4a1 1 0 010 2H6.414l2.293 2.293a1 1 0 11-1.414 1.414L5 6.414V8a1 1 0 01-2 0V4zm9 1a1 1 0 010-2h4a1 1 0 011 1v4a1 1 0 01-2 0V6.414l-2.293 2.293a1 1 0 11-1.414-1.414L13.586 5H12zm-9 7a1 1 0 012 0v1.586l2.293-2.293a1 1 0 111.414 1.414L6.414 15H8a1 1 0 010 2H4a1 1 0 01-1-1v-4zm13-1a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 010-2h1.586l-2.293-2.293a1 1 0 111.414-1.414L15 13.586V12a1 1 0 011-1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <p className="text-xs text-slate-400 mt-2">
-                Supported format: .glb (GLB 3D model)
-              </p>
-            </div>
-          </div>
+            
+          </div> */}
+
+        <a href="https://glb.ee/" target="blank">
+
+          <button className="p-2 px-4 bg-white text-black rounded-xl "> View 3D Twin</button>
+
+        </a>
+          
+      
+          
         </div>
       </div>
 
-      {/* <GLBViewer/> */}
+   
 
 
 
